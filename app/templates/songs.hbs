@@ -1,0 +1,10 @@
+<h2>All the songs</h2>
+<ul>
+  {{#each model as |song|}}
+    <li>{{song.name}} -
+      {{#each song.artists as |artist|}}
+        {{artist.name}},
+      {{/each}}
+    </li>
+  {{/each}}
+</ul>

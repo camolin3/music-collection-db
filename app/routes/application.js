@@ -81,5 +81,5 @@ export default Route.extend({
     album2.get('links').pushObject(link2);
     album1.save().then(() => link1.save());
     album2.save().then(() => link2.save());
-  }
+  },
 });
