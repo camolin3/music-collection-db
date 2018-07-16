@@ -1,0 +1,25 @@
+<h2>Albums</h2>
+<ul>
+  {{#each model as |album|}}
+    <img src="{{album.cover}}" alt="">
+    <li>
+      <strong>{{album.name}}</strong>
+      <div>
+        Songs:
+        <ol>
+          {{#each album.songs as |song|}}
+            <li>{{song.name}}</li>
+          {{/each}}
+        </ol>
+      </div>
+      <div>
+        Links:
+        <ul>
+          {{#each album.links as |link|}}
+          <a href="{{link.url}}" target="_blank">{{link.service}}</a>
+          {{/each}}
+        </ul>
+      </div>
+    </li>
+  {{/each}}
+</ul>

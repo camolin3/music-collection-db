@@ -26,12 +26,32 @@ addSong({ name: 'All the Small Things', genres: 'pop punk, power pop', yearOfRel
 addSong({ name: 'Anthem Part Two', genres: 'punk', yearOfRelease: 2001 });
 addSong({ name: 'Perfect Symphony', genres: 'pop', yearOfRelease: 2017 });
 
+let albumsId = 1;
+const ALBUMS = [];
+const addAlbum = (attributes) => {
+  return addModel(albumsId++, 'album', attributes, ALBUMS);
+};
+
+addAlbum({ name: 'Take Off Your Pants & Jacket', cover: 'https://vignette.wikia.nocookie.net/lyricwiki/images/4/45/Blink-182_-_TakeOffYourPantsAndJacket.jpg/revision/latest/scale-to-width-down/180?cb=20130508032257' });
+addAlbum({ name: '÷', cover: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Divide_-_Ed_Sheeran_2017_album_logo.svg/1920px-Divide_-_Ed_Sheeran_2017_album_logo.svg.png' });
+
+let linksId = 1;
+const LINKS = [];
+const addLink = (attributes) => {
+  return addModel(linksId++, 'album-link', attributes, LINKS);
+};
+
+addLink({ service: 'Spotify', url: 'https://open.spotify.com/album/3nHpBmW5wJXGeC3ojBkpey' });
+addLink({ service: 'Spotify', url: 'https://open.spotify.com/album/3T4tUhGYeRNVUGevb0wThu' });
+
 export default Route.extend({
   model() {
     this.get('store').push({
       data: [
         ...ARTISTS,
         ...SONGS,
+        ...ALBUMS,
+        ...LINKS,
       ],
     });
     const blink = this.get('store').peekRecord('artist', 1);
@@ -46,6 +66,20 @@ export default Route.extend({
     const andrea = this.get('store').peekRecord('artist', 3);
     const perfectSong = this.get('store').peekRecord('song', 3);
     perfectSong.get('artists').pushObjects([ed, andrea]);
-    perfectSong.save().then(() => RSVP.resolve({ed: ed.save(), andrea: andrea.save()}));
+    perfectSong.save().then(() => RSVP.resolve([ed.save(), andrea.save()]));
+
+    const album1 = this.get('store').peekRecord('album', 1);
+    const album2 = this.get('store').peekRecord('album', 2);
+    album1.get('songs').pushObjects([blinkSong1, blinkSong2]);
+    album2.get('songs').pushObject(perfectSong);
+    album1.save().then(() => RSVP.resolve([blinkSong1.save(), blinkSong2.save()]));
+    album2.save().then(() => perfectSong.save());
+
+    const link1 = this.get('store').peekRecord('album-link', 1);
+    const link2 = this.get('store').peekRecord('album-link', 2);
+    album1.get('links').pushObject(link1);
+    album2.get('links').pushObject(link2);
+    album1.save().then(() => link1.save());
+    album2.save().then(() => link2.save());
   }
 });

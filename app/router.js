@@ -8,6 +8,7 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('artists');
+  this.route('albums');
 });
 
 export default Router;
