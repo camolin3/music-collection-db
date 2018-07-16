@@ -1,0 +1,6 @@
+<h2>Artists</h2>
+<ul>
+  {{#each model as |artist|}}
+    <li>{{artist.name}}, <span>{{artist.songs.length}} songs</span></li>
+  {{/each}}
+</ul>
