@@ -1,0 +1,17 @@
+html {
+  box-sizing: border-box;
+  font-family: arial,sans-serif;
+  font-weight: normal;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+img {
+  border: 1pt #3333 solid;
+  height: 6rem;
+  margin-top: 3rem;
+  object-fit: contain;
+  padding: 0;
+  width: 6rem;
+}
